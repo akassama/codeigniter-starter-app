@@ -17,16 +17,29 @@
 
         <form action="<?= base_url('sign-up/process-sign-up') ?>" method="post" class="row g-3 needs-validation" novalidate>
             <div class="mb-3">
-                <label for="full_name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="full name" required>
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="first name" required>
                 <!-- Error -->
-                <?php if($validation->getError('full_name')) {?>
+                <?php if($validation->getError('first_name')) {?>
                     <div class='alert alert-danger mt-2'>
-                        <?= $error = $validation->getError('full_name'); ?>
+                        <?= $error = $validation->getError('first_name'); ?>
                     </div>
                 <?php }?>
                 <div class="invalid-feedback">
-                    Please provide your name
+                    Please provide first name
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="last name" required>
+                <!-- Error -->
+                <?php if($validation->getError('last_name')) {?>
+                    <div class='alert alert-danger mt-2'>
+                        <?= $error = $validation->getError('last_name'); ?>
+                    </div>
+                <?php }?>
+                <div class="invalid-feedback">
+                    Please provide last name
                 </div>
             </div>
             <div class="mb-3">
