@@ -98,20 +98,4 @@ class UsersModel extends Model
         return $user;
     }
 
-    public function validateStatus($login)
-    {
-        // Check if the login is an email or username
-        $user = $this->where('email', $login)
-            ->orWhere('username', $login)
-            ->first();
-
-        // Check if user status is active
-        if ($user['status'] != 1) {
-            return false;
-        }
-
-        // Return the user status
-        return $user;
-    }
-
 }

@@ -27,22 +27,25 @@ class SignInController extends BaseController
         // Attempt to log in the user
         $user = $usersModel->validateLogin($emailOrUsername, $password);
 
-        // Check if user status is active
-        if(!$usersModel->validateStatus($emailOrUsername)){
-            // Login failed: Redirect back to login page with user not active error message
-            return redirect()->to('/sign-in?not-active')->with('error', 'User not active');
-        }
-
         if ($user) {
+            // Check if user status is active
+            if ($user['status'] != 1) {
+                // Login failed: Redirect back to login page with user not active error message
+                session()->setFlashdata('errorAlert', 'Your account has not been activated yet or is no longer active. Please contact the administrator.');
+                return redirect()->to('/sign-in');
+            }
+
             // User logged in successfully
 
             // Store user data in session or set cookies, etc.
 
             // Redirect to dashboard or desired page
+            session()->setFlashdata('successAlert', 'Login successful!');
             return redirect()->to('/dashboard');
         } else {
             // Login failed: Redirect back to login page with an error message
-            return redirect()->to('/sign-in')->with('error', 'Invalid email/username or password');
+            session()->setFlashdata('errorAlert', 'Invalid email/username or password');
+            return view('front-end/sign-in/index');
         }
     }
 }

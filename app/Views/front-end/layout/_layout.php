@@ -27,5 +27,8 @@ $rootDirectory = dirname(dirname(__DIR__));
 <!-- Include the footer_assets -->
 <?=  $this->include('front-end/layout/assets/footer_assets.php'); ?>
 
+<!-- Include sweet_alerts-->
+<?=  $this->include('front-end/layout/assets/sweet_alerts.php'); ?>
+
 </body>
 </html>
