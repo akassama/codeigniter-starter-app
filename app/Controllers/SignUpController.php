@@ -47,17 +47,16 @@ class SignUpController extends BaseController
             //inserted user_id
             $insertedId = $usersModel->getInsertID();
 
-            // User created successfully
-            return $this->response->setJSON([
-                'status' => true,
-                'message' => 'User created successfully'
-            ]);
+            // User created successfully. Redirect to dashboard
+            $createSuccessMsg = config('CustomConfig')->createSuccessMsg;
+            session()->setFlashdata('successAlert', $createSuccessMsg);
+            return redirect()->to('/sign-in');
+
         } else {
-            // Failed to create user
-            return $this->response->setJSON([
-                'status' => false,
-                'message' => 'Failed to create user'
-            ]);
+            // Failed to create user. Redirect to dashboard
+            $errorMsg = config('CustomConfig')->errorMsg;
+            session()->setFlashdata('errorAlert', $errorMsg);
+            return view('front-end/sign-up/index');
         }
     }
 

@@ -12,7 +12,7 @@ class UsersModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['user_id', 'first_name', 'last_name', 'username', 'email', 'password', 'status'];
+    protected $allowedFields    = ['user_id', 'first_name', 'last_name', 'username', 'email', 'password', 'status', 'role'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -58,6 +58,7 @@ class UsersModel extends Model
         $userId = bin2hex(random_bytes(16)); // Generates a 32-character hexadecimal ID
         $password = password_hash($param['password'], PASSWORD_DEFAULT);
         $defaultStatus = 0;
+        $defaultRole = 'User';
         $data = [
             'user_id' => $userId,
             'first_name' => $param['first_name'],
@@ -65,9 +66,45 @@ class UsersModel extends Model
             'username' => $param['username'],
             'email' => $param['email'],
             'password' => $password,
-            'status' => $defaultStatus
+            'status' => $defaultStatus,
+            'role' => $defaultRole
         ];
         $this->save($data);
+
+        return true;
+    }
+
+    public function updateUser($userId, $param = [])
+    {
+        // Check if user exists
+        $existingUser = $this->find($userId);
+        if (!$existingUser) {
+            return false; // User not found
+        }
+
+        // Update the fields
+        $existingUser['first_name'] = $param['first_name'];
+        $existingUser['last_name'] = $param['last_name'];
+
+        // Save the updated data
+        $this->save($existingUser);
+
+        return true;
+    }
+
+    public function updateUserRole($userId, $role)
+    {
+        // Check if user exists
+        $existingUser = $this->find($userId);
+        if (!$existingUser) {
+            return false; // User not found
+        }
+
+        // Update the role
+        $existingUser['role'] = $role;
+
+        // Save the updated data
+        $this->save($existingUser);
 
         return true;
     }
@@ -81,11 +118,6 @@ class UsersModel extends Model
 
         // If user not found, return false
         if (!$user) {
-            return false;
-        }
-
-        // Check if user status is active
-        if ($user['status'] != 1) {
             return false;
         }
 

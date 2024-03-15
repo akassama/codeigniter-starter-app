@@ -31,20 +31,29 @@ class SignInController extends BaseController
             // Check if user status is active
             if ($user['status'] != 1) {
                 // Login failed: Redirect back to login page with user not active error message
-                session()->setFlashdata('errorAlert', 'Your account has not been activated yet or is no longer active. Please contact the administrator.');
+                $pendingActivationMsg = config('CustomConfig')->pendingActivationMsg;
+                session()->setFlashdata('errorAlert', $pendingActivationMsg);
                 return redirect()->to('/sign-in');
             }
 
-            // User logged in successfully
+            // User logged in successfully. Store user data in session
+            session()->set([
+                'user_id' => $user['user_id'],
+                'first_name' => $user['first_name'],
+                'last_name' => $user['last_name'],
+                'username' => $user['username'],
+                'email' => $user['email'],
+                'is_logged_in' => TRUE
+            ]);
 
-            // Store user data in session or set cookies, etc.
-
-            // Redirect to dashboard or desired page
-            session()->setFlashdata('successAlert', 'Login successful!');
-            return redirect()->to('/dashboard');
+            // Redirect to dashboard
+            $loginSuccessMsg = config('CustomConfig')->loginSuccessMsg;
+            session()->setFlashdata('successAlert', $loginSuccessMsg);
+            return redirect()->to('/account/dashboard');
         } else {
             // Login failed: Redirect back to login page with an error message
-            session()->setFlashdata('errorAlert', 'Invalid email/username or password');
+            $wrongCredentialsMsg = config('CustomConfig')->wrongCredentialsMsg;
+            session()->setFlashdata('errorAlert', $wrongCredentialsMsg);
             return view('front-end/sign-in/index');
         }
     }

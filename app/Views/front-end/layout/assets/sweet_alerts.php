@@ -56,3 +56,11 @@
         swal.fire('<?= session()->getFlashdata('messageAlert') ?>');
     </script>
 <?php endif;?>
+
+<?php
+    //Clear flash data
+    session()->setFlashdata('successAlert', '');
+    session()->setFlashdata('errorAlert', '');
+    session()->setFlashdata('warningAlert', '');
+    session()->setFlashdata('infoAlert', '');
+?>

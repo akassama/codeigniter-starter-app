@@ -16,13 +16,21 @@ $routes->group('home', function($routes) {
 $routes->get('/about', 'AboutController::index');
 
 //SIGN-IN
-$routes->group('sign-in', function($routes) {
+$routes->group('sign-in', ['filter' => 'guestFilter'], function($routes) {
     $routes->add('/', 'SignInController::index');
-    $routes->post('process-sign-in', 'SignInController::login');
+    $routes->post('/', 'SignInController::login');
 });
 
 //SIGN-UP
 $routes->group('sign-up', function($routes) {
     $routes->add('/', 'SignUpController::index');
-    $routes->post('process-sign-up', 'SignUpController::addRegistration');
+    $routes->post('/', 'SignUpController::addRegistration');
+});
+
+//SIGN-OUT
+$routes->get('/sign-out', 'SignOutController::index');
+
+//ACCOUNT - DASHBOARD
+$routes->group('account', ['filter' => 'authFilter'], function($routes) {
+    $routes->add('dashboard', 'DashboardController::index');
 });

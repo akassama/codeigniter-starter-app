@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserPermissionsModel extends Model
+class ErrorLogsModel extends Model
 {
-    protected $table            = 'userpermissions';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $table            = 'errorlogs';
+    protected $primaryKey       = 'error_log_id';
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['error_log_id', 'user', 'severity', 'error_message'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -39,4 +39,19 @@ class UserPermissionsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function logError($param = array())
+    {
+        // Generate a unique ID (UUID)
+        $errorLogId = bin2hex(random_bytes(16)); // Generates a 32-character hexadecimal ID
+        $data = [
+            'error_log_id' => $errorLogId,
+            'user' => $param['user'],
+            'severity' => $param['severity'],
+            'error_message' => $param['error_message']
+        ];
+        $this->save($data);
+
+        return true;
+    }
 }

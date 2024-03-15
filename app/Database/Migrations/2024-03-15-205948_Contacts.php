@@ -4,53 +4,51 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Users extends Migration
+class Contacts extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'user_id' => [
+            'contact_id' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
                 'null' => false,
                 'unique' => true,
             ],
-            'first_name' => [
+            'contact_name' => [
                 'type' => 'VARCHAR',
                 'constraint' => '100',
+                'null' => false,
             ],
-            'last_name' => [
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-            ],
-            'username' => [
-                'type' => 'VARCHAR',
-                'constraint' => '100',
-            ],
-            'email' => [
+            'contact_picture' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'null' => false,
             ],
-            'password' => [
+            'contact_email' => [
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'null' => false,
+            ],
+            'contact_number' => [
+                'type' => 'VARCHAR',
+                'constraint' => '50',
+                'null' => false,
+            ],
+            'contact_address' => [
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'null' => true,
             ],
-            'status' => [
-                'type' => 'INT',
-                'Default' => 0,
-            ],
-            'created_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp',
+            'created_at datetime default current_timestamp',
         ]);
-
-        $this->forge->addKey('user_id', true);
-        $this->forge->createTable('users');
-
-        //TODO: Insert default records
+        $this->forge->addKey('contact_id', true);
+        $this->forge->createTable('contacts');
     }
 
     public function down()
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('contacts');
     }
 }

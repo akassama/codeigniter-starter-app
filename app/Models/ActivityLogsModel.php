@@ -6,13 +6,13 @@ use CodeIgniter\Model;
 
 class ActivityLogsModel extends Model
 {
-    protected $table            = 'activitylogs';
-    protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
+    protected $table            = 'activity_logs';
+    protected $primaryKey       = 'activity_id';
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['activity_id','activity_by','activity_type','activity'];
 
     protected bool $allowEmptyInserts = false;
 
@@ -39,4 +39,19 @@ class ActivityLogsModel extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+    public function logActivity($param = array())
+    {
+        // Generate a unique ID (UUID)
+        $activityId = bin2hex(random_bytes(16)); // Generates a 32-character hexadecimal ID
+        $data = [
+            'activity_id' => $activityId,
+            'activity_type' => $param['activity_type'],
+            'activity' => $param['activity'],
+            'activity_by' => $param['activity_by']
+        ];
+        $this->save($data);
+
+        return true;
+    }
 }
