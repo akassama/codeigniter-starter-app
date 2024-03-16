@@ -42,11 +42,31 @@ class HtmxController extends BaseController
         exit();
     }
 
+    public function checkPasswordIsValid()
+    {
+        $password = $this->request->getPost('password');
+
+        // Regex pattern for password validation
+        $pattern = '/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$/';
+
+        if(!empty($password)){
+            // Check if the password matches the pattern
+            if (!preg_match($pattern, $password)) {
+                echo '<span class="text-danger">
+                    <p>The password must be at least 6 characters long.<br/>
+                    The password must contain at least one letter, one digit, and one special character.</p>
+                  </span>';
+            }
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+
     public function checkPasswordsMatch()
     {
         $password = $this->request->getPost('password');
         $repeatPassword = $this->request->getPost('repeat_password');
-
 
         if($password != $repeatPassword){
             // Passwords do not match

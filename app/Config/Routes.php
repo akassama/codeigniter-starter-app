@@ -39,5 +39,6 @@ $routes->group('account', ['filter' => 'authFilter'], function($routes) {
 $routes->group('htmx', function($routes) {
     $routes->post('check-user-email-exists', 'HtmxController::userEmailExists');
     $routes->post('check-user-username-exists', 'HtmxController::userUsernameExists');
+    $routes->post('check-password-is-valid', 'HtmxController::checkPasswordIsValid');
     $routes->post('check-passwords-match', 'HtmxController::checkPasswordsMatch');
 });

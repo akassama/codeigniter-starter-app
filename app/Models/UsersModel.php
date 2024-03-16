@@ -29,14 +29,14 @@ class UsersModel extends Model
         'last_name' => 'required',
         'username' => 'required|is_unique[users.username]',
         'email' => 'required|valid_email|is_unique[users.email]',
-        'password' => 'required',
+        'password' => 'required|min_length[6]|regex_match[/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^A-Za-z\d]).{6,}$/]',
     ];
     protected $validationMessages   = [
-        'first_name' => 'first name is required',
-        'last_name' => 'last name is required',
-        'username' => 'username is required',
-        'email' => 'email is required',
-        'password' => 'password is required',
+        'first_name' => 'First name is required',
+        'last_name' => 'Last name is required',
+        'username' => 'Username is required',
+        'email' => 'Email is required',
+        'password' => 'Password is required, must be at least 6 characters long. Contain at least one letter, one digit, and one special character.',
     ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;

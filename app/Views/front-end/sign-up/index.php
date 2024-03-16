@@ -81,8 +81,19 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="enter password" required>
+                <div x-data="{ showPassword: false }">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group mb-3">
+                        <input x-bind:type="showPassword ? 'text' : 'password'" class="form-control" id="password" name="password" placeholder="enter password" required
+                               hx-post="<?=base_url()?>/htmx/check-password-is-valid"
+                               hx-trigger="keyup[target.value.length > 2] changed delay:250ms"
+                               hx-target="#password-valid-error"
+                               hx-swap="innerHTML">
+                        <span class="input-group-text" id="addon-wrapping" x-on:click="showPassword = !showPassword">
+                            <i x-bind:class="{'bi bi-eye text-dark': !showPassword, 'bi bi-eye-slash-fill text-dark': showPassword}" id="eye-icon"></i>
+                        </span>
+                    </div>
+                </div>
                 <!-- Error -->
                 <?php if($validation->getError('password')) {?>
                     <div class='alert alert-danger mt-2'>
@@ -91,6 +102,8 @@
                 <?php }?>
                 <div class="invalid-feedback">
                     Please provide a password
+                </div>
+                <div id="password-valid-error">
                 </div>
             </div>
             <div class="mb-3">
