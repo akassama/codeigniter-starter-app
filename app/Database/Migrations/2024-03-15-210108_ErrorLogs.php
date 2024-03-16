@@ -17,7 +17,7 @@ class ErrorLogs extends Migration
             ],
             'user' => [
                 'type' => 'VARCHAR',
-                'constraint' => '250',
+                'constraint' => '50',
                 'null' => true,
             ],
             'severity' => [

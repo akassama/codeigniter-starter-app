@@ -39,6 +39,11 @@ class Users extends Migration
                 'type' => 'INT',
                 'Default' => 0,
             ],
+            'role' => [
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => 'User',
+            ],
             'created_at datetime default current_timestamp',
             'updated_at datetime default current_timestamp on update current_timestamp',
         ]);
