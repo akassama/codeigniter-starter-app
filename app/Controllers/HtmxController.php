@@ -1,0 +1,59 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Controllers\BaseController;
+use CodeIgniter\HTTP\ResponseInterface;
+
+class HtmxController extends BaseController
+{
+    protected $helpers = ['data_helper'];
+    public function userEmailExists()
+    {
+        $userEmail = $this->request->getPost('email');
+        $tableName = 'users';
+        $primaryKey = 'email';
+
+        if(!empty($userEmail)){
+            if (recordExists($tableName, $primaryKey, $userEmail)) {
+                // User with email already exists
+                echo '<span class="text-danger">User with email ('.$userEmail.') already exists</span>';
+            }
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+
+    public function userUsernameExists()
+    {
+        $username = $this->request->getPost('username');
+        $tableName = 'users';
+        $primaryKey = 'username';
+
+        if(!empty($username)){
+            if (recordExists($tableName, $primaryKey, $username)) {
+                // User with username already exists
+                echo '<span class="text-danger">User with username ('.$username.') already exists</span>';
+            }
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+
+    public function checkPasswordsMatch()
+    {
+        $password = $this->request->getPost('password');
+        $repeatPassword = $this->request->getPost('repeat_password');
+
+
+        if($password != $repeatPassword){
+            // Passwords do not match
+            echo '<span class="text-danger">Passwords do not match</span>';
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+}

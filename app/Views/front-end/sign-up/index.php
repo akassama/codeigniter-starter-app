@@ -44,7 +44,11 @@
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="username" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="username" required
+                       hx-post="<?=base_url()?>/htmx/check-user-username-exists"
+                       hx-trigger="keyup changed delay:250ms"
+                       hx-target="#existing-username-error"
+                       hx-swap="innerHTML">
                 <!-- Error -->
                 <?php if($validation->getError('username')) {?>
                     <div class='alert alert-danger mt-2'>
@@ -54,10 +58,16 @@
                 <div class="invalid-feedback">
                     Please provide your username
                 </div>
+                <div id="existing-username-error">
+                </div>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                       hx-post="<?=base_url()?>/htmx/check-user-email-exists"
+                       hx-trigger="keyup changed delay:250ms"
+                       hx-target="#existing-username-error"
+                       hx-swap="innerHTML">
                 <!-- Error -->
                 <?php if($validation->getError('email')) {?>
                     <div class='alert alert-danger mt-2'>
@@ -66,6 +76,8 @@
                 <?php }?>
                 <div class="invalid-feedback">
                     Please provide an email
+                </div>
+                <div id="existing-email-error">
                 </div>
             </div>
             <div class="mb-3">
@@ -83,7 +95,11 @@
             </div>
             <div class="mb-3">
                 <label for="repeat_password" class="form-label">Repeat Password</label>
-                <input type="password" class="form-control" id="repeat_password" name="repeat_password" placeholder="re-enter password" required>
+                <input type="password" class="form-control" id="repeat_password" name="repeat_password" placeholder="re-enter password" required
+                       hx-post="<?=base_url()?>/htmx/check-passwords-match"
+                       hx-trigger="keyup[target.value.length > 2] changed delay:250ms"
+                       hx-target="#password-match-error"
+                       hx-swap="innerHTML">
                 <!-- Error -->
                 <?php if($validation->getError('repeat_password')) {?>
                     <div class='alert alert-danger mt-2'>
@@ -92,6 +108,8 @@
                 <?php }?>
                 <div class="invalid-feedback">
                     Please re-type password
+                </div>
+                <div id="password-match-error">
                 </div>
             </div>
             <div class="mb-3">

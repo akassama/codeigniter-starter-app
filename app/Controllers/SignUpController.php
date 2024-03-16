@@ -26,10 +26,8 @@ class SignUpController extends BaseController
         // Validate the incoming data
         if (!$this->validate($validationRules)) {
             // If validation fails, return validation errors
-            return $this->response->setJSON([
-                'status' => false,
-                'errors' => $this->validator->getErrors()
-            ]);
+            $data['validation'] = $this->validator;
+            return view('front-end/sign-up/index');
         }
 
         // If validation passes, create the user

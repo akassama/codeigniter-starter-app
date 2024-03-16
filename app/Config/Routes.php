@@ -9,7 +9,7 @@ $routes->get('/', 'HomeController::index');
 
 //HOME
 $routes->group('home', function($routes) {
-    $routes->add('/', 'HomeController::index');
+    $routes->get('/', 'HomeController::index');
 });
 
 //ABOUT
@@ -17,13 +17,13 @@ $routes->get('/about', 'AboutController::index');
 
 //SIGN-IN
 $routes->group('sign-in', ['filter' => 'guestFilter'], function($routes) {
-    $routes->add('/', 'SignInController::index');
+    $routes->get('/', 'SignInController::index');
     $routes->post('/', 'SignInController::login');
 });
 
 //SIGN-UP
 $routes->group('sign-up', function($routes) {
-    $routes->add('/', 'SignUpController::index');
+    $routes->get('/', 'SignUpController::index');
     $routes->post('/', 'SignUpController::addRegistration');
 });
 
@@ -32,5 +32,12 @@ $routes->get('/sign-out', 'SignOutController::index');
 
 //ACCOUNT - DASHBOARD
 $routes->group('account', ['filter' => 'authFilter'], function($routes) {
-    $routes->add('dashboard', 'DashboardController::index');
+    $routes->get('dashboard', 'DashboardController::index');
+});
+
+//HTMX
+$routes->group('htmx', function($routes) {
+    $routes->post('check-user-email-exists', 'HtmxController::userEmailExists');
+    $routes->post('check-user-username-exists', 'HtmxController::userUsernameExists');
+    $routes->post('check-passwords-match', 'HtmxController::checkPasswordsMatch');
 });
