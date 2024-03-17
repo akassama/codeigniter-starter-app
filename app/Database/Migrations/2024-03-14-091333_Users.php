@@ -51,7 +51,20 @@ class Users extends Migration
         $this->forge->addKey('user_id', true);
         $this->forge->createTable('users');
 
-        //TODO: Insert default records
+        //Insert default record
+        $data = [
+            'user_id' => bin2hex(random_bytes(16)),
+            'first_name'    => 'Admin',
+            'last_name'    => 'User',
+            'username'    => 'admin',
+            'email'    => 'admin@example.com',
+            'password' => password_hash('Admin@1', PASSWORD_DEFAULT),
+            'status'    => 1,
+            'role'    => 'Admin',
+        ];
+
+        // Using Query Builder
+        $this->db->table('users')->insert($data);
     }
 
     public function down()

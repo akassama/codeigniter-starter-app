@@ -8,11 +8,6 @@
 <div class="row justify-content-center">
     <div class="col-md-6 col-sm-12 bg-light rounded p-4">
 
-        <div class="row">
-            <span class="validation_errors text-danger">
-                <?= validation_list_errors() ?>
-            </span>
-        </div>
         <?php $validation = \Config\Services::validation(); ?>
 
         <form action="<?= base_url('sign-up') ?>" method="post" class="row g-3 needs-validation" novalidate>
@@ -63,7 +58,7 @@
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required
                        hx-post="<?=base_url()?>/htmx/check-user-email-exists"
                        hx-trigger="keyup changed delay:250ms"
                        hx-target="#existing-username-error"
@@ -92,6 +87,9 @@
                         <span class="input-group-text" id="addon-wrapping" x-on:click="showPassword = !showPassword">
                             <i x-bind:class="{'bi bi-eye text-dark': !showPassword, 'bi bi-eye-slash-fill text-dark': showPassword}" id="eye-icon"></i>
                         </span>
+                        <div class="invalid-feedback">
+                            Please provide a password
+                        </div>
                     </div>
                 </div>
                 <!-- Error -->
@@ -100,9 +98,6 @@
                         <?= $error = $validation->getError('password'); ?>
                     </div>
                 <?php }?>
-                <div class="invalid-feedback">
-                    Please provide a password
-                </div>
                 <div id="password-valid-error">
                 </div>
             </div>

@@ -190,6 +190,29 @@ if(!function_exists('getPaginatedRecords')) {
     }
 }
 
+if(!function_exists('getTableData')) {
+    function getTableData($tableName, $whereClause, $returnColumn)
+    {
+        // Connect to the database
+        $db = \Config\Database::connect();
+
+        // Build the query
+        $query = $db->table($tableName)
+            ->select($returnColumn)
+            ->where($whereClause)
+            ->get();
+
+        if ($query->getNumRows() > 0) {
+            // Retrieve the result
+            $row = $query->getRow();
+            return $row->$returnColumn;
+        } else {
+            // No record found, return null
+            return null;
+        }
+    }
+}
+
 /**
  * Execute a custom SQL query.
  *

@@ -30,9 +30,27 @@ $routes->group('sign-up', function($routes) {
 //SIGN-OUT
 $routes->get('/sign-out', 'SignOutController::index');
 
-//ACCOUNT - DASHBOARD
+
+//ACCOUNT
+$routes->get('/account', 'AccountController::index', ['filter' => 'authFilter']);
+
+//ACCOUNT
 $routes->group('account', ['filter' => 'authFilter'], function($routes) {
+    //DASHBOARD
     $routes->get('dashboard', 'DashboardController::index');
+
+    //CONTACTS
+    $routes->get('contacts', 'ContactsController::index');
+
+    //SETTINGS
+    $routes->get('settings', 'SettingsController::index');
+    $routes->get('settings/update-details', 'SettingsController::updateDetails');
+    $routes->get('settings/change-password', 'SettingsController::changePassword');
+
+    //ADMIN
+    $routes->get('admin', 'AdminController::index');
+    $routes->get('admin/users', 'AdminController::users');
+    $routes->get('admin/activity-logs', 'AdminController::activityLogs');
 });
 
 //HTMX
@@ -42,3 +60,6 @@ $routes->group('htmx', function($routes) {
     $routes->post('check-password-is-valid', 'HtmxController::checkPasswordIsValid');
     $routes->post('check-passwords-match', 'HtmxController::checkPasswordsMatch');
 });
+
+//TEST
+$routes->get('/test', 'TestController::index');

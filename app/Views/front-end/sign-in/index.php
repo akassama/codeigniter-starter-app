@@ -8,17 +8,12 @@
 <div class="row justify-content-center">
     <div class="col-md-4 col-sm-12 bg-light rounded p-4">
 
-        <div class="row">
-            <span class="validation_errors text-danger">
-                <?= validation_list_errors() ?>
-            </span>
-        </div>
         <?php $validation = \Config\Services::validation(); ?>
 
         <form action="<?= base_url('sign-in') ?>" method="post" class="row g-3 needs-validation" novalidate>
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<?= set_value('email') ?>"  required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" value="<?= set_value('email') ?>" required>
                 <!-- Error -->
                 <?php if($validation->getError('email')) {?>
                     <div class='alert alert-danger mt-2'>

@@ -1,0 +1,4 @@
+* Create Admin Layout
+* Check to see if user record exists or role is the same from session at every request. (To handle changes in state after login)
+* Using JWT as Auth
+* Write tests for the app
