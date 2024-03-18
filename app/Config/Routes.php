@@ -53,12 +53,19 @@ $routes->group('account', ['filter' => 'authFilter'], function($routes) {
     $routes->get('admin/activity-logs', 'AdminController::activityLogs');
 });
 
+//SEARCH
+$routes->group('search', function($routes) {
+    $routes->get('/', 'SearchController::searchResults');
+    $routes->get('modules', 'SearchController::searchModulesResult', ['filter' => 'authFilter']);
+});
+
 //HTMX
 $routes->group('htmx', function($routes) {
     $routes->post('check-user-email-exists', 'HtmxController::userEmailExists');
     $routes->post('check-user-username-exists', 'HtmxController::userUsernameExists');
     $routes->post('check-password-is-valid', 'HtmxController::checkPasswordIsValid');
     $routes->post('check-passwords-match', 'HtmxController::checkPasswordsMatch');
+    $routes->post('search-back-end-features', 'HtmxController::backendSearchResults');
 });
 
 //TEST

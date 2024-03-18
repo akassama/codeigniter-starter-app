@@ -8,8 +8,6 @@ use App\Models\UsersModel;
 
 class SignUpController extends BaseController
 {
-    protected $helpers = ['form'];
-
     public function index()
     {
         return view('front-end/sign-up/index');

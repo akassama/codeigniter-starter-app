@@ -76,4 +76,23 @@ class HtmxController extends BaseController
         //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
         exit();
     }
+
+    public function backendSearchResults()
+    {
+        $search = $this->request->getPost('search_query');
+
+        $searchResults = '<ul class="list-group">
+                              <li class="list-group-item">First item</li>
+                              <li class="list-group-item">Second item</li>
+                              <li class="list-group-item">Third item</li>
+                            </ul>';
+
+        if(!empty($searchResults)){
+            // Display results
+            echo $searchResults;
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
 }

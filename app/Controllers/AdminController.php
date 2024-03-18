@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class AdminController extends BaseController
 {
-    protected $helpers = ['data_helper', 'auth_helper'];
+    protected $helpers = ['auth_helper'];
 
     public function index()
     {

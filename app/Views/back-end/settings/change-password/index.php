@@ -4,11 +4,15 @@
 <!-- begin main content -->
 <?= $this->section('content') ?>
 
-<ol class="breadcrumb mb-4 mt-4">
-    <li class="breadcrumb-item"><a href="<?= base_url('/account'); ?>">Dashboard</a></li>
-    <li class="breadcrumb-item"><a href="<?= base_url('/account/settings'); ?>">Settings</a></li>
-    <li class="breadcrumb-item active">Change Password</li>
-</ol>
+<?php
+// Breadcrumbs
+$breadcrumb_links = array(
+    array('title' => 'Dashboard', 'url' => '/account'),
+    array('title' => 'Settings', 'url' => '/account/settings'),
+    array('title' => 'Change Password')
+);
+echo generateBreadcrumb($breadcrumb_links);
+?>
 <div class="row">
     <!--Content-->
     <div class="col-12">

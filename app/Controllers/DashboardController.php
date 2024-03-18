@@ -7,7 +7,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class DashboardController extends BaseController
 {
-    protected $helpers = ['data_helper', 'auth_helper'];
+    protected $helpers = ['auth_helper'];
     public function index()
     {
         return view('back-end/dashboard/index');

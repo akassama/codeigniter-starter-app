@@ -4,10 +4,15 @@
 <!-- begin main content -->
 <?= $this->section('content') ?>
 
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="<?= base_url('/account'); ?>">Dashboard</a></li>
-    <li class="breadcrumb-item active">Contacts</li>
-</ol>
+<?php
+// Breadcrumbs
+$breadcrumb_links = array(
+    array('title' => 'Dashboard', 'url' => '/account'),
+    array('title' => 'Contacts')
+);
+echo generateBreadcrumb($breadcrumb_links);
+?>
+
 <div class="row">
     <!--Content-->
     <div class="col-12">

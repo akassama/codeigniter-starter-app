@@ -6,10 +6,14 @@
 
 <h1 class="mt-4">Admin</h1>
 
-<ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="<?= base_url('/account'); ?>">Dashboard</a></li>
-    <li class="breadcrumb-item active">Admin</li>
-</ol>
+<?php
+// Breadcrumbs
+$breadcrumb_links = array(
+    array('title' => 'Dashboard', 'url' => '/account'),
+    array('title' => 'Admin')
+);
+echo generateBreadcrumb($breadcrumb_links);
+?>
 <div class="row">
     <!--Content-->
     <div class="col-xl-3 col-md-6">

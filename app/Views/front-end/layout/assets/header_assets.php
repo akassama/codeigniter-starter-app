@@ -11,6 +11,9 @@
 <!--custom css-->
 <link href="<?= base_url('public/front-end/assets/css/style.css')?>" rel="stylesheet" />
 
+<!-- jQuery CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!--favicon [https://realfavicongenerator.net/]-->
 <link rel="apple-touch-icon" sizes="180x180" href="<?= base_url('public/front-end/assets/img/favicon/apple-touch-icon.png')?>">
 <link rel="icon" type="image/png" sizes="32x32" href="<?= base_url('public/front-end/assets/img/favicon/favicon-32x32.png')?>">

@@ -38,7 +38,7 @@
                 </div>
             </div>
             <div class="mb-3">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" id="submit-btn">Submit</button>
             </div>
             <div class="my-2">
                 <p>
@@ -48,6 +48,20 @@
         </form>
     </div>
 </div>
+
+<script>
+    //TODO: REMOVE AUTO LOGIN
+    $(document).ready(function() {
+        setTimeout(
+            function()
+            {
+                $("#email").val("admin@example.com");
+                $("#password").val("Admin@1");
+                $("#submit-btn").click();
+            }, 1000);
+
+    });
+</script>
 
 <!-- end main content -->
 <?= $this->endSection() ?>
