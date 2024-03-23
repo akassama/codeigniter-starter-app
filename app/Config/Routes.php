@@ -41,6 +41,8 @@ $routes->group('account', ['filter' => 'authFilter'], function($routes) {
 
     //CONTACTS
     $routes->get('contacts', 'ContactsController::index');
+    $routes->get('contacts/new-contact', 'ContactsController::newContact');
+    $routes->post('contacts/new-contact', 'ContactsController::addContact');
 
     //SETTINGS
     $routes->get('settings', 'SettingsController::index');
@@ -66,6 +68,8 @@ $routes->group('htmx', function($routes) {
     $routes->post('check-password-is-valid', 'HtmxController::checkPasswordIsValid');
     $routes->post('check-passwords-match', 'HtmxController::checkPasswordsMatch');
     $routes->post('search-back-end-features', 'HtmxController::backendSearchResults');
+
+    $routes->post('check-contact-number-exists', 'HtmxController::contactNumberExists');
 });
 
 //TEST

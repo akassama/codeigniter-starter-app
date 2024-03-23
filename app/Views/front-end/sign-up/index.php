@@ -61,7 +61,7 @@
                 <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required
                        hx-post="<?=base_url()?>/htmx/check-user-email-exists"
                        hx-trigger="keyup changed delay:250ms"
-                       hx-target="#existing-username-error"
+                       hx-target="#existing-user-email-error"
                        hx-swap="innerHTML">
                 <!-- Error -->
                 <?php if($validation->getError('email')) {?>
@@ -72,7 +72,7 @@
                 <div class="invalid-feedback">
                     Please provide an email
                 </div>
-                <div id="existing-email-error">
+                <div id="existing-user-email-error">
                 </div>
             </div>
             <div class="mb-3">

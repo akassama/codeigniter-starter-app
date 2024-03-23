@@ -42,11 +42,12 @@ class AppModulesModel extends Model
 
     public function searchModules($searchQuery, $role = "User")
     {
-        $db = \Config\Database::connect();
         return $this->like('module_name', $searchQuery)
             ->orWhere('module_description', $searchQuery)
             ->orWhere('module_link', $searchQuery)
+            ->groupStart()
             ->like('module_roles', $role)
+            ->groupEnd()
             ->findAll();
     }
 }

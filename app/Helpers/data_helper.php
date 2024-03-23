@@ -190,6 +190,14 @@ if(!function_exists('getPaginatedRecords')) {
     }
 }
 
+/**
+ * Retrieves data from a specified database table based on the given conditions.
+ *
+ * @param {string} $tableName - The name of the database table.
+ * @param {array} $whereClause - An associative array representing the WHERE clause conditions (e.g., ['column_name' => 'value']).
+ * @param {string} $returnColumn - The name of the column to retrieve data from.
+ * @return {mixed} The value of the specified column or null if no record is found.
+ */
 if(!function_exists('getTableData')) {
     function getTableData($tableName, $whereClause, $returnColumn)
     {
@@ -245,3 +253,133 @@ if(!function_exists('truncateTable')) {
     }
 }
 
+/**
+ * Retrieves the size of an existing file.
+ *
+ * @param {string} $file - The path to the file.
+ * @param {string} [$type="MB"] - Measurement type ("KB" or "MB").
+ * @return {float|string} The file size in the specified measurement type or an error message.
+ */
+
+if (!function_exists('getFileSize')) {
+    function getFileSize($file, $type = "MB") {
+        // Check if the file exists
+        if (!is_file($file)) {
+            return "File not found.";
+        }
+
+        // Get the file size in bytes
+        $size = filesize($file);
+
+        // Convert to the specified measurement type
+        switch (strtoupper($type)) {
+            case "KB":
+                $sizeFormatted = round($size / 1024, 2); // Kilobytes
+                break;
+            case "MB":
+                $sizeFormatted = round($size / (1024 * 1024), 2); // Megabytes
+                break;
+            default:
+                return 0.0;
+        }
+
+        return $sizeFormatted;
+    }
+}
+
+/**
+ * Checks if the provided file is a valid image.
+ *
+ * @param {object} $file - The uploaded file (CodeIgniter\HTTP\Files\UploadedFile object).
+ * @return {boolean} True if the file is a valid image; otherwise, false.
+ */
+
+if (!function_exists('isValidImage')) {
+    function isValidImage($file) {
+        // Check if file is not empty
+        if (empty($file)) {
+            return false;
+        }
+
+        // Validate image file types
+        $allowedImageExtensions = ['png', 'jpg', 'jpeg', 'gif', 'bmp'];
+        $fileExtension = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+        return in_array($fileExtension, $allowedImageExtensions);
+    }
+}
+
+/**
+ * Checks if the provided file is a valid document.
+ *
+ * @param {object} $file - The uploaded file (CodeIgniter\HTTP\Files\UploadedFile object).
+ * @return {boolean} True if the file is a valid document; otherwise, false.
+ */
+if (!function_exists('isValidIDocFile')) {
+    function isValidIDocFile($file) {
+        // Check if file is not empty
+        if (empty($file)) {
+            return false;
+        }
+
+        // Validate document file types
+        $allowedDocExtensions = ['pdf', 'doc', 'docx', 'xls'];
+        $fileExtension = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+        return in_array($fileExtension, $allowedDocExtensions);
+    }
+}
+
+/**
+ * Checks if the file extension matches the specified extension.
+ *
+ * @param {object} $file - The uploaded file (CodeIgniter\HTTP\Files\UploadedFile object).
+ * @param {string} $ext - The desired file extension (e.g., 'pdf', 'doc').
+ * @return {boolean} True if the file extension matches; otherwise, false.
+ */
+if (!function_exists('hasValidFileExt')) {
+    function hasValidFileExt($file, $ext) {
+        // Check if file is not empty
+        if (empty($file)) {
+            return false;
+        }
+
+        // Validate against the provided extension
+        $fileExtension = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION));
+        return ($fileExtension === strtolower($ext));
+    }
+}
+
+/**
+ * Validates and uploads a file to the specified path.
+ *
+ * @param {object} $file - The uploaded file (CodeIgniter\HTTP\Files\UploadedFile object).
+ * @param {string} $path - The path for saving the file.
+ * @param {string} [$defaultResponse=""] - Default response if file or path is null/empty.
+ * @return {string} The uploaded file path or the default response.
+ */
+if (!function_exists('uploadFile')) {
+    function uploadFile($file, $path, $defaultResponse = "") {
+        // Check if file and path are not empty
+        if (empty($file) || empty($path)) {
+            return $defaultResponse;
+        }
+
+        // Validate file type
+        $allowedExtensions = ['png', 'jpg', 'jpeg', 'pdf', 'doc', 'docx', 'xls'];
+        $fileExtension = strtolower(pathinfo($file->getName(), PATHINFO_EXTENSION)); // Use getName() method
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            return "Invalid file type. Accepted formats: .png, .jpg, .jpeg, .pdf, .doc, .docx, .xls";
+        }
+
+        // Generate a unique filename
+        $newName = $file->getRandomName();
+
+        // Move the uploaded file to the specified path
+        if ($file->move(ROOTPATH .  $path."/", $newName)) {
+            $updatedFileName = $path."/".$newName;
+            return $updatedFileName;
+        } else {
+            echo "Error uploading file.";
+            return $defaultResponse;
+        }
+    }
+}

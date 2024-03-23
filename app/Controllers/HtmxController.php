@@ -77,6 +77,31 @@ class HtmxController extends BaseController
         exit();
     }
 
+
+
+
+
+
+
+    public function contactNumberExists()
+    {
+        $contactNumber = $this->request->getPost('contact_number');
+        $tableName = 'contacts';
+        $primaryKey = 'contact_number';
+
+        if(!empty($contactNumber)){
+            if (recordExists($tableName, $primaryKey, $contactNumber)) {
+                // User with email already exists
+                echo '<span class="text-danger">Contact with number ('.$contactNumber.') already exists</span>';
+            }
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+
+
+
     public function backendSearchResults()
     {
         $search = $this->request->getPost('search_query');

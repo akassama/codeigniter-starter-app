@@ -8,7 +8,7 @@ class ContactsModel extends Model
 {
     protected $table            = 'contacts';
     protected $primaryKey       = 'contact_id';
-    protected $useAutoIncrement = true;
+    protected $useAutoIncrement = false;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
@@ -24,8 +24,18 @@ class ContactsModel extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [];
-    protected $validationMessages   = [];
+    protected $validationRules = [
+        'contact_name' => 'required|max_length[50]|min_length[2]',
+        'contact_email' => 'required|max_length[50]|min_length[3]|valid_email',
+        'contact_number' => 'required|max_length[20]|min_length[6]|is_unique[contacts.contact_number]',
+        'contact_address' => 'required|max_length[255]|min_length[2]',
+    ];
+    protected $validationMessages   = [
+        'contact_name' => 'Contact name is required',
+        'contact_email' => 'Contact email is required',
+        'contact_number' => 'Contact number name is required',
+        'contact_address' => 'Username is required',
+    ];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
 
@@ -44,7 +54,7 @@ class ContactsModel extends Model
     {
         // Generate a unique ID (UUID)
         $contactId = bin2hex(random_bytes(16)); // Generates a 32-character hexadecimal ID
-        $defaultPicture = 'profiles/default-profile.png';
+        $defaultPicture = 'public/uploads/contacts/default/default-profile.png';
         $data = [
             'contact_id' => $contactId,
             'contact_name' => $param['contact_name'],
