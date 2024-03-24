@@ -126,3 +126,10 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+public/uploads/contacts/*.(jpg|jpeg|png|gif)
+public/uploads/contacts/*.png
+public/uploads/contacts/*.jpg
+public/uploads/contacts/*.jpeg
+public/uploads/contacts/*.gif
+public/uploads/contacts/*.bmp
+public/uploads/contacts/*.svg

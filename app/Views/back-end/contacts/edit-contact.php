@@ -9,7 +9,7 @@
 $breadcrumb_links = array(
     array('title' => 'Dashboard', 'url' => '/account'),
     array('title' => 'Contacts', 'url' => '/account/contacts'),
-    array('title' => 'New Contact')
+    array('title' => 'Edit Contact')
 );
 echo generateBreadcrumb($breadcrumb_links);
 ?>
@@ -17,15 +17,15 @@ echo generateBreadcrumb($breadcrumb_links);
 <div class="row">
     <!--Content-->
     <div class="col-12">
-        <h3>New Contact</h3>
+        <h3>Edit Contact</h3>
     </div>
     <div class="col-12 bg-light rounded p-4">
         <?php $validation = \Config\Services::validation(); ?>
-        <?php echo form_open(base_url('account/contacts/new-contact'), 'method="post" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate'); ?>
+        <?php echo form_open(base_url('account/contacts/edit-contact'), 'method="post" class="row g-3 needs-validation" enctype="multipart/form-data" novalidate'); ?>
         <div class="row">
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="contact_name" class="form-label">Contact Name</label>
-                <input type="text" class="form-control" id="contact_name" name="contact_name" value="<?= set_value('contact_name') ?>" required>
+                <input type="text" class="form-control" id="contact_name" name="contact_name" value="<?= $contact_data['contact_name'] ?>" required>
                 <!-- Error -->
                 <?php if($validation->getError('contact_name')) {?>
                     <div class='text-danger mt-2'>
@@ -33,25 +33,35 @@ echo generateBreadcrumb($breadcrumb_links);
                     </div>
                 <?php }?>
                 <div class="invalid-feedback">
-                    Please provide contact name
+                    Please provide an contact name
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
-                <label for="contact_picture" class="form-label">Contact Picture</label>
-                <input type="file" class="form-control" id="contact_picture" name="contact_picture">
-                <!-- Error -->
-                <?php if($validation->getError('contact_picture')) {?>
-                    <div class='text-danger mt-2'>
-                        <?= $error = $validation->getError('contact_picture'); ?>
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 mb-3">
+                        <label for="contact_picture" class="form-label">Contact Picture</label>
+                        <input type="file" class="form-control" id="contact_picture" name="contact_picture">
+                        <!-- Error -->
+                        <?php if($validation->getError('contact_picture')) {?>
+                            <div class='text-danger mt-2'>
+                                <?= $error = $validation->getError('contact_picture'); ?>
+                            </div>
+                        <?php }?>
+                        <div class="invalid-feedback">
+                            Please provide a contact picture
+                        </div>
                     </div>
-                <?php }?>
-                <div class="invalid-feedback">
-                    Please provide contact picture
+                    <div class="col-sm-2 col-md-2 mb-3">
+                        <img src="<?= base_url($contact_data['contact_picture']); ?>" class="img-fluid img-thumbnail" alt="<?= $contact_data['contact_name']; ?>">
+                        <span class="text-danger small">
+                            current photo
+                        </span>
+                    </div>
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="contact_email" class="form-label">Contact Email</label>
-                <input type="email" class="form-control" id="contact_email" name="contact_email" value="<?= set_value('contact_email') ?>" required>
+                <input type="email" class="form-control" id="contact_email" name="contact_email" value="<?= $contact_data['contact_email'] ?>" required>
                 <!-- Error -->
                 <?php if($validation->getError('contact_email')) {?>
                     <div class='text-danger mt-2'>
@@ -64,8 +74,8 @@ echo generateBreadcrumb($breadcrumb_links);
             </div>
             <div class="col-sm-12 col-md-6 mb-3">
                 <label for="contact_number" class="form-label">Contact Number</label>
-                <input type="text" class="form-control" id="contact_number" name="contact_number" minlength="6" maxlength="20" value="<?= set_value('contact_number') ?>" required
-                       hx-post="<?=base_url()?>/htmx/check-contact-number-exists"
+                <input type="text" class="form-control" id="contact_number" name="contact_number" minlength="6" maxlength="20" value="<?= $contact_data['contact_number'] ?>" required
+                       hx-post="<?=base_url()?>/htmx/check-edit-contact-number-exists"
                        hx-trigger="keyup changed delay:250ms"
                        hx-target="#existing-contact-number-error"
                        hx-swap="innerHTML">
@@ -83,7 +93,7 @@ echo generateBreadcrumb($breadcrumb_links);
             </div>
             <div class="col-sm-12 col-md-12 mb-3">
                 <label for="contact_address" class="form-label">Contact Address</label>
-                <textarea rows="1" class="form-control" id="contact_address" name="contact_address" value="<?= set_value('contact_address') ?>" required></textarea>
+                <textarea rows="1" class="form-control" id="contact_address" name="contact_address" required><?= $contact_data['contact_address'] ?></textarea>
                 <!-- Error -->
                 <?php if($validation->getError('contact_address')) {?>
                     <div class='text-danger mt-2'>
@@ -94,14 +104,21 @@ echo generateBreadcrumb($breadcrumb_links);
                     Please provide contact address
                 </div>
             </div>
+
+            <!--hidden inputs -->
+            <div class="col-12">
+                <input type="hidden" class="form-control" id="contact_id" name="contact_id" value="<?= $contact_data['contact_id']; ?>">
+                <input type="hidden" class="form-control" id="current_contact_picture" name="current_contact_picture" value="<?= $contact_data['contact_picture']; ?>">
+            </div>
+
             <div class="mb-3">
                 <a href="<?= base_url('/account/contacts') ?>" class="btn btn-outline-danger" id="submit-btn">
                     <i class="bi bi-caret-left-fill"></i>
                     Back
                 </a>
                 <button type="submit" class="btn btn-outline-primary float-end" id="submit-btn">
-                    <i class="bi bi-send"></i>
-                    Submit
+                    <i class="bi bi-pencil-square"></i>
+                    Update
                 </button>
             </div>
         </div>

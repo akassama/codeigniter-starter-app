@@ -17,6 +17,7 @@ class CustomConfig extends BaseConfig
     public $createSuccessMsg = 'Record created successfully.';
     public $editSuccessMsg = 'Record updated successfully.';
     public $deleteSuccessMsg = 'Record removed successfully.';
+    public $missingRequiredInputsMsg = 'There are validation errors. Possible missing required inputs.';
     public $notFoundMsg = 'Record not found.';
     public $errorMsg = 'Oops! Something went wrong. Please try again later.';
     public $exceptionMsg = 'There was an error processing your request. Please try again. If this error persists, please see or send an email to system administrator.';

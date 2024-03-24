@@ -16,7 +16,7 @@ class HtmxController extends BaseController
 
         if(!empty($userEmail)){
             if (recordExists($tableName, $primaryKey, $userEmail)) {
-                // User with email already exists
+                // Record already exists
                 echo '<span class="text-danger">User with email ('.$userEmail.') already exists</span>';
             }
         }
@@ -33,7 +33,7 @@ class HtmxController extends BaseController
 
         if(!empty($username)){
             if (recordExists($tableName, $primaryKey, $username)) {
-                // User with username already exists
+                // Record already exists
                 echo '<span class="text-danger">User with username ('.$username.') already exists</span>';
             }
         }
@@ -81,8 +81,6 @@ class HtmxController extends BaseController
 
 
 
-
-
     public function contactNumberExists()
     {
         $contactNumber = $this->request->getPost('contact_number');
@@ -91,8 +89,27 @@ class HtmxController extends BaseController
 
         if(!empty($contactNumber)){
             if (recordExists($tableName, $primaryKey, $contactNumber)) {
-                // User with email already exists
+                // Record already exists
                 echo '<span class="text-danger">Contact with number ('.$contactNumber.') already exists</span>';
+            }
+        }
+
+        //Exit to prevent bug: Uncaught RangeError: Maximum call stack size exceeded
+        exit();
+    }
+
+    public function editContactNumberExists()
+    {
+        $contactId = $this->request->getPost('contact_id');
+        $contactNumber = $this->request->getPost('contact_number');
+        $tableName = 'contacts';
+        $primaryKey = 'contact_number';
+        $whereClause = "contact_number = '$contactNumber' AND contact_id != '$contactId'";
+
+        if(!empty($contactNumber) && !empty($contactId)){
+            if (checkRecordExists($tableName, $primaryKey, $whereClause)) {
+                // Record already exists
+                echo '<span class="text-danger">Another contact with number ('.$contactNumber.') already exists</span>';
             }
         }
 
