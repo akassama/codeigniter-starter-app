@@ -80,6 +80,15 @@ https://localhost/ci-starter-app/
   
     To modify the default Admin login, go to the migration file located at `app/Database/Migrations/2024-08-27-210112_Users.php` and update the `$data[]` array accordingly.
 
+
+* Configure Email Settings
+  
+* To enable email functionality, you need to configure your Mailjet settings in app/Config/Email.php:
+```
+public string $mailjetApiKey = 'your-mailjet-api-key';
+public string $mailjetApiSecret = 'your-mailjet-api-secret';
+```
+
 ## How to Customize System Features?
 ### Customizing Notification Messages
 To customize system messages:
